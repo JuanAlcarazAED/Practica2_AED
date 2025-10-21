@@ -198,14 +198,43 @@ ggsave('figs/Ejercicio1.pdf')
 
 ### **Ejercicio 2**
 
-* Utilizando ggplot haz un grafico de dispersión en el que representes las variables ``Temp9am`` y ``Pressure9am`` en los ejes $x$ e $y$ respectivamente.
+* Utilizando ggplot haz un gráfico de dispersión en el que representes las variables ``Temp9am`` y ``Pressure9am`` en los ejes $x$ e $y$ respectivamente.
+
+```{r}
+grafico4 <- ggplot(ds, aes(x = Temp9am, y = Pressure9am)) + geom_point()
+grafico4
+```
+
 * Modifica el gráfico anterior para incluir información categórica proporcionada por la variable ``RainToday`` con la forma del punto.
+
+```{r}
+grafico4 <- ggplot(ds, aes(x = Temp9am, y = Pressure9am, shape = RainToday)) + geom_point()
+grafico4
+```
+
 * Modifica el gráfico anterior para incluir información categórica proporcionada por la variable ``RainToday`` con el color del punto. ¿Con qué representación (color o forma) se observa mejor la información que introduce la variable ``RainToday``?
+
+```{r}
+grafico4 <- ggplot(ds, aes(x = Temp9am, y = Pressure9am, color = RainToday)) + geom_point()
+grafico4
+```
+La información se observa mucho mejor con `color`.
+
 * Añade títulos explicativos al gráfico anterior (debe aparece un título, subtítulo, leyendas e información de las variables representadas en los ejes). 
+
+```{r}
+grafico5 <- grafico4 + labs(title = "Temperatura y presión a las 9 am",
+     subtitle = "Relación entre la tempretura y presión de un día con las precipitaciones",
+     x = "Temperatura a las 9:00 (en grados centígrados)",
+     y = "Presión atmosférica a las 9:00 (en bares)",
+     caption = "Datos obtenidos de mediciones manuales",
+     colour='Día lluevioso')
+grafico5
+```
+
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio2.pdf``.
 
 ```{r Solucion ejercicio 2}
-
 ggsave('figs/Ejercicio2.pdf')
 ```
 
