@@ -371,14 +371,37 @@ ggplot(data=Dosis.Medicina2, aes(x=Dosis, y=Efectividad, group=Complemento)) +
 ### **Ejercicio 4**
 
 * Carga el fichero ``Ejercicio4_Data.Rdata``. Examina las variables que tiene dicho dataset.
+
+```{r}
+# Como vamos a cambiar de conjunto de datos limpiamos las variables
+rm(list = ls())
+
+# Ahora cargamos los datos
+load("./data/Ejercicio4_Data.Rdata")
+str(DatosEjer4)
+```
+
 * Representa un gráfico de puntos, en el que se muestre la fecha en el eje $x$ y las ventas en el eje $y$. Queremos que los datos de cada fabricante sean de un color distinto. ¿Es este gráfico válido para evaluar la evolución de las ventas de cada fabricante?
+
+```{r}
+grafico1 <- ggplot(DatosEjer4, aes(x = Fecha, y = Ventas, color = Fabricante)) + geom_point()
+grafico1
+```
+El gráfico no es muy claro, aunque los colores ayudan a distinguir los fabricantes, las nuebes de puntos están inconexas y se mezclan.
+
 * Representa un gráfico como el anterior en el que se muestre la línea que une los puntos que antes has representado.
+
+```{r}
+grafico2 <- grafico1 + geom_line()
+grafico2
+```
+
 * Modifica el gráfico anterior para que la tendencia de cada fabricante este trazada con un tipo de línea diferente.
 * Añade el siguiente título al gráfico *"Ventas mensuales de diferentes compañías tecnológicas"*.
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio4.pdf``.
 
 ```{r Solucion ejercicio 4}
-
+grafico3 <- grafico1 + geom_lines()
 ```
 
 ## Barras de error con **ggplot2**
@@ -429,13 +452,40 @@ Añadir barras de error a un gráfico de línea.
 
 El fichero ``iceRiver.RData`` contiene información del caudal de dos ríos islandeses  medidos a diarios durante 3 años. Puedes obtener información detallada de las variables usando ``> ?tseries::ice.river``
 
-  * Representa el caudal de ambos ríos a lo largo del período considerado coloreando una serie (`flow.vat`) en color rojo y la otra en color azul. 
-  * Utiliza la función `labs` para enriquecer el gráfico.
-  * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio5.pdf``.
+* Representa el caudal de ambos ríos a lo largo del período considerado coloreando una serie (`flow.vat`) en color rojo y la otra en color azul.
+
+```{r}
+# Reseteamos el espacio de las variables
+rm(list = ls())
+
+# Importamos los datos
+load("./data/iceRiver.RData")
+?tseries::ice.river
+
+# Ahora representamos los caudales respecto del tiempo
+grafico1 <- ggplot(ice.river.df, aes(x = time)) + 
+            geom_line(mapping = aes(y = flow.vat, color = "red")) + 
+            geom_line(mapping = aes(y = flow.jok, color = "blue"))
+grafico1
+```
+
+* Utiliza la función `labs` para enriquecer el gráfico.
+
+```{r}
+grafico1 <- grafico1 + labs(title = "Serie de tiempo",
+                 subtitle = "Flujo de agua diario en los ríos Vatnsdalsa y Hveravellir",
+                 x = "Flujo",
+                 y = "Tiempo",
+                 caption = "Flujo díario en los ríos",
+                 colour='Río')
+grafico1
+```
+
+* Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio5.pdf``.
 
 ```{r Solucion ejercicio 6 }
 
-
+ggsave("figs/Ejercicio6.pdf")
 ```
 
 
