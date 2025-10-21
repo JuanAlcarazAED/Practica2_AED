@@ -186,13 +186,13 @@ grafico2
 * Añade a ``grafico2`` una capa para incluir un título con **ggtitle()** y almacénalo en ``grafico3``.
 
 ```{r}
-grafico3 <- grafico2 + ggtitle()
+grafico3 <- grafico2 + ggtitle("Datos de temperatura máxima y mínima para días lluviosos y no lluviosos")
+grafico3
 ```
 
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio1.pdf``.
 
 ```{r Solucion ejercicio 1}
-
 ggsave('figs/Ejercicio1.pdf')
 ```
 
