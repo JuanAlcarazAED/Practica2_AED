@@ -575,6 +575,7 @@ grafico2
 
 ```{r}
 grafico2 <- grafico2 + theme(legend.position = "none") + 
+            theme(axis.text.x = element_text(angle = 45, hjust = 1))
 grafico2
 ```
 
@@ -591,6 +592,9 @@ Como no podía ser de otra manera, **ggplot2()** permite obtener histogramas par
 Veamos en primer lugar cómo hacer un histograma básico de la variable ``AGE``. Podrás observar que la nomenclatura es muy intuitiva con todo lo que has ido viendo hasta el momento.
 
 ```{r}
+# Eliminamos las variables previas
+rm(list = ls())
+
 load("./data/dataset_hist1.Rdata")
 #Histograma básico.
 ggplot(data=dataset_hist1, aes(x=AGE)) + geom_histogram()
@@ -674,18 +678,80 @@ ggplot(data=dataset_hist1, aes(x=AGE)) +
 
 ### **Ejercicio 8**
 
-* Descarga de la url  "http://assets.datacamp.com/blog_assets/chol.txt" el dataset de Datacamp que utilizarás para este ejercicio y cárgalo en un datafrae .
+* Descarga de la url  "http://assets.datacamp.com/blog_assets/chol.txt" el dataset de Datacamp que utilizarás para este ejercicio y cárgalo en un dataframe .
+
+```{r}
+rm(list = ls())
+library(readr)
+library(ggplot2) 
+
+chol <- read_table("data/chol.txt")
+```
+
 * Representa el histograma de la variable ``HEIGHT`` del dataframe cargado del fichero anterior.
+
+```{r}
+grafico1 <- ggplot(data = chol, aes(x = HEIGHT)) + geom_histogram()
+grafico1
+```
+
 * Añade título ("Histograma de la variable Altura"), una etiqueta en el eje $x$ ("Altura (cm)") y una etiqueta en el eje $y$ ("Frecuencia").
-* Ajusta el rango de representación entre 155 y 195, además fuerza que el histograma tenga 20 *bins*.(usa parámetro `breaks`)
+
+```{r}
+grafico1 <- grafico1 + labs(title = "Histograma de la variable altura",
+                              x = "Altura (cm)",
+                              y = "Frecuencia")
+grafico1
+```
+
+* Ajusta el rango de representación entre 155 y 195, además fuerza que el histograma tenga 20 *bins*.(usa parámetro `breaks`).
+
+```{r}
+grafico2 <- ggplot(data = chol, aes(x = HEIGHT)) + 
+            geom_histogram(breaks=seq(155, 195, by=(195 - 155) / 20))
+grafico2
+```
+
 * Haz que las barras del histograma sean de color azul con una grado de transparencia del 50% y el contorno de color rojo.
+
+```{r}
+grafico3 <- ggplot(data = chol, aes(x = HEIGHT)) + 
+            geom_histogram(breaks=seq(155, 195, by=(195 - 155) / 20),
+                           fill = "blue",
+                           color = "red",
+                           alpha = 0.5)
+grafico3
+```
+
 * Añade la curva de distribución estimada de color verde.
+
+```{r}
+grafico4 <- ggplot(data = chol, aes(x = HEIGHT)) + 
+            geom_histogram(aes(y = after_stat(density)),
+                           breaks=seq(155, 195, by=(195 - 155) / 20),
+                           fill = "blue",
+                           color = "red",
+                           alpha = 0.5) + geom_density(col="green")
+grafico4
+```
+
 * Representa el mismo histograma del apartado anterior para cada valor de la variable ``MORT``, recuerda utilizar la función **facet_grid()**.
+
+```{r}
+grafico5 <- ggplot(data = chol, aes(x = HEIGHT)) + 
+            geom_histogram(aes(y = after_stat(density)),
+                           breaks=seq(155, 195, by=(195 - 155) / 20),
+                           fill = "blue",
+                           color = "red",
+                           alpha = 0.5) + geom_density(col="green") + 
+            facet_grid(~MORT)
+grafico5
+```
+
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio8.pdf``.
 
-```{r Solucion ejercicio 8}
-# 
-
+```{r}
+ggsave("figs/Ejercicio8.pdf")
 ```
 
 ## Gráficos de barras con **ggplot2**
