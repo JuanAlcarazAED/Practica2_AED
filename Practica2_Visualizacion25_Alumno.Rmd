@@ -397,12 +397,23 @@ grafico2
 ```
 
 * Modifica el gráfico anterior para que la tendencia de cada fabricante este trazada con un tipo de línea diferente.
+```{r}
+grafico3 <- grafico1 + geom_line(aes(linetype = Fabricante))
+grafico3
+```
 * Añade el siguiente título al gráfico *"Ventas mensuales de diferentes compañías tecnológicas"*.
+
+```{r}
+grafico3 <- grafico3 + labs(title = "Ventas mensuales de diferentes compañías tecnológicas")
+grafico3
+```
+
 * Almacena en formato **pdf** el gráfico resultante en un fichero denominado ``Ejercicio4.pdf``.
 
-```{r Solucion ejercicio 4}
-grafico3 <- grafico1 + geom_lines()
+```{r}
+ggsave('figs/Ejercicio4.pdf') # se almacena el último gráfico generado
 ```
+
 
 ## Barras de error con **ggplot2**
 
